@@ -1,0 +1,1216 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>PostgreSQL</title>
+  <meta charset="utf-8">
+  <meta name="description" content="PostgreSQL">
+  <meta name="author" content="Kai-Christian Bruhn">
+  <meta name="generator" content="slidify" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta http-equiv="X-UA-Compatible" content="chrome=1">
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/default.css" media="all" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/phone.css" 
+    media="only screen and (max-device-width: 480px)" >
+  <link rel="stylesheet" href="libraries/frameworks/io2012/css/slidify.css" >
+  <link rel="stylesheet" href="libraries/highlighters/highlight.js/css/tomorrow.css" />
+  <base target="_blank"> <!-- This amazingness opens all links in a new tab. -->  <link rel=stylesheet href="./assets/css/ribbons.css"></link>
+
+  
+  <!-- Grab CDN jQuery, fall back to local if offline -->
+  <script src="http://ajax.aspnetcdn.com/ajax/jQuery/jquery-1.7.min.js"></script>
+  <script>window.jQuery || document.write('<script src="libraries/widgets/quiz/js/jquery.js"><\/script>')</script> 
+  <script data-main="libraries/frameworks/io2012/js/slides" 
+    src="libraries/frameworks/io2012/js/require-1.0.8.min.js">
+  </script>
+  
+  
+
+</head>
+<body style="opacity: 0">
+  <slides class="layout-widescreen">
+    
+    <!-- LOGO SLIDE -->
+        <slide class="title-slide segue nobackground">
+  <hgroup class="auto-fadein">
+    <h1>PostgreSQL</h1>
+    <h2>Einführung in die Syntax</h2>
+    <p>Kai-Christian Bruhn<br/>University of Applied Sciences Mainz</p>
+  </hgroup>
+  <article></article>  
+  <footer class = 'license'>
+    <a href='http://creativecommons.org/licenses/by-sa/3.0/'>
+    <img width = '80px' src = 'http://mirrors.creativecommons.org/presskit/buttons/88x31/png/by-sa.png'>
+    </a>
+  </footer>
+</slide>
+    
+
+    <!-- SLIDES -->
+    <slide class="" id="slide-1" style="background:;">
+  <hgroup>
+    <h2>Handbücher</h2>
+  </hgroup>
+  <article data-timings="">
+    <ul>
+<li>Eisentraut, Peter, und Bernd Helmle. PostgreSQL-Administration. 2. Auflage. OReilly, 2010.</li>
+<li>Fröhlich, Lutz. PostgreSQL 9: Praxisbuch für Administratoren und Entwickler. Carl Hanser Verlag GmbH &amp; CO. KG, 2012.</li>
+<li>Krosing, H. Postgresql Server Programming. [S.l.]: Packt Publishing Limited, 2013.</li>
+<li>Papakostas, Ioannis. Datenbankentwicklung mit PostgreSQL 9. Teia AG, 2010.</li>
+<li>Obe, Regina O, und Leo S Hsu. PostgreSQL: Up an Running. Beijing: OReilly, 2012.</li>
+<li>Riggs, Simon, Hannu Krosing, und Inc ebrary. PostgreSQL 9 Admin Cookbook: Over 80 Recipes to Help You Run an Efficient PostgreSQL 9. 0 Database. Birmingham: Packt Publishing, Limited, 2010.</li>
+<li>Scherbaum, Andreas. PostgreSQL. Datenbankpraxis für Anwender, Administratoren und Entwickler. 1., Aufl. Open Source Press, 2009.</li>
+</ul>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-2" style="background:;">
+  <hgroup>
+    <h2>www-Ressourcen</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><a href="http://www.postgresql.org">http://www.postgresql.org</a></p>
+
+<p><a href="http://www.postgresonline.com/">http://www.postgresonline.com/</a></p>
+
+<p><a href="http://www.teialehrbuch.de/Kostenlose-Kurse/Datenbankentwicklung-mit-PostgreSQL-9/index.html">http://www.teialehrbuch.de/Kostenlose-Kurse/Datenbankentwicklung-mit-PostgreSQL-9/index.html</a></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-3" style="background:;">
+  <hgroup>
+    <h2>createdb: Datenbank erstellen</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Erstellen einer Datenbank &#39;meineDB&#39; als user (-U) &#39;student&#39;:</p>
+
+<pre><code>createdb meineDB -U student
+</code></pre>
+
+<p>Weitere wichtige Optionen:</p>
+
+<pre><code>-E -- Zeichenkodierung (e.g. UTF8, WIN1250, LATIN1)
+-O -- Besitzer, falls abweichend von user (e.g. &quot;meinName&quot;)
+-T -- Template, also Vorlage. Kopie einer Bestehenden anlegen
+</code></pre>
+
+<p>Vollständige Dokumentation:</p>
+
+<p><a href="http://www.postgresql.org/docs/9.3/static/app-createdb.html">http://www.postgresql.org/docs/9.3/static/app-createdb.html</a></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-4" style="background:;">
+  <hgroup>
+    <h2>dropdb: Datenbank löschen</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Löschen der Datenbank &#39;meineDB&#39;</p>
+
+<pre><code>dropdb meineDB
+</code></pre>
+
+<p>mit Bestätigung:</p>
+
+<pre><code>dropdb meineDB -i
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-5" style="background:;">
+  <hgroup>
+    <h2>psql: Hilfe</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Syntaxhilfe für das Programm psql</p>
+
+<pre><code>psql --help
+</code></pre>
+
+<p>Vollständige Dokumentation:</p>
+
+<p><a href="http://www.postgresql.org/docs/9.3/static/app-psql.html">http://www.postgresql.org/docs/9.3/static/app-psql.html</a></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-6" style="background:;">
+  <hgroup>
+    <h2>psql: PostgreSQL-Version erfragen</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Version des PostgreSQL-Servers abrufen</p>
+
+<pre><code>psql -V
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-7" style="background:;">
+  <hgroup>
+    <h2>psql: Verbindung zu Datenbank herstellen</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Verbindung zu Datenbank herstellen:</p>
+
+<pre><code>psql -d meineDB -U student
+</code></pre>
+
+<p>Meldet den user (-U) &#39;student&#39; auf der Datenbank (-d) &#39;meineDB&#39; an</p>
+
+<p>Eingabeaufforderung wechselt zu:</p>
+
+<pre><code>meineDB=#   --Weitere psql-Befehle, SQL-Statements
+</code></pre>
+
+<p>Beenden von psql:</p>
+
+<pre><code>\q
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-8" style="background:;">
+  <hgroup>
+    <h2>psql: Datenbanken anlegen (SQL)</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Anlegen neuer Datenbanken während der Verbindung mit dem PostgreSQL-Server:</p>
+
+<pre><code>meineDB=# CREATE DATABASE andereDB OWNER nutzer;
+</code></pre>
+
+<p>Wechseln der Datenbankverbindung</p>
+
+<pre><code>meineDB=# \connect andereDB
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-9" style="background:;">
+  <hgroup>
+    <h2>psql: Daten einspielen</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>sicherung.sql-Datei in meineDB einspielen:</p>
+
+<pre><code>meineDB=# \i /pfad_zu_der_sql_sicherung/sicherung.sql
+</code></pre>
+
+<p>Unabhängig vom Betriebssystem erwartet PostgreSQL /.</p>
+
+<p>Mit dem Befehl \i werden sql-Dateien zeilenweise eingelesen.</p>
+
+<p>Einlesen weiterer Datenformate (csv etc.):</p>
+
+<p><a href="http://www.postgresql.org/docs/9.3/static/sql-copy.html">http://www.postgresql.org/docs/9.3/static/sql-copy.html</a>.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-10" style="background:;">
+  <hgroup>
+    <h2>psql: Funktionen</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code>meineDB=# \dg  -- Rollen auflisten
+meineDB=# \dn   -- Schemata auflisten
+meineDB=# \dp   -- Zugriffsprivilegien auflisten (entspricht \z)
+meineDB=# \dt   -- Tabellen auflisten
+meineDB=# \dv   -- Sichten auflisten
+meineDB=# \l    -- Datenbanken auflisten
+
+meineDB=# \a    -- ausgerichteter/unausgerichteter Ausgabemodus
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-11" style="background:;">
+  <hgroup>
+    <h2>Datendefinition</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Tabellen anlegen</p>
+
+<pre><code>CREATE TABLE name (spalte1 datentyp, spalte2 datentyp, ...);
+</code></pre>
+
+<p>Tabelle löschen</p>
+
+<pre><code>DROP TABLE name;
+DROP TABLE IF EXISTS name; -- Ohne Fehlermeldung
+</code></pre>
+
+<p>Abhängige Objekte mitlöschen (Fremdschlüsseldefinitionen, Views)</p>
+
+<pre><code>DROP TABLE name CASCADE;
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-12" style="background:;">
+  <hgroup>
+    <h2>PostgreSQL Datentypen (Auswahl)</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code>serial -- 4 Byte, 1 bis 2.147.483.647, selbstzählende ganze Zahl.
+integer -- 4 Byte, -2.147.483.648 bis +2.147.483.647
+double precision -- 8 Byte, -1E308 bis +1E308, Genauigkeit 15
+numeric / decimal (length,precision) -- variabel, (4,2 -&gt; ##,##)
+boolean -- Bool&#39;sche Werte, (TRUE, &#39;t&#39;, &#39;y&#39;, &#39;on&#39;, &#39;1&#39;)
+                         -- (FALSE, &#39;f&#39;, &#39;n&#39;, &#39;off&#39;, &#39;0&#39;)
+varchar(length) -- Text mit variabler Länge (1-4056 Bytes)
+char(length) -- Text mit fester Länge n (1-255 Bytes)
+text -- Variable Länge ohne Höchstgrenze
+bytea -- Binär-Strings
+money -- Währung, 8 Byte
+time -- Zeit, 8 Byte, 00:00:00:00 bis 23:59:59:99
+date -- Datum, 4 Byte, von 4713 v.u.Z. bis 32767 u.Z.
+</code></pre>
+
+<p>Vollständige Liste</p>
+
+<p><a href="http://www.postgresql.org/docs/9.3/static/datatype.html">http://www.postgresql.org/docs/9.3/static/datatype.html</a></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-13" style="background:;">
+  <hgroup>
+    <h2>Constraints (Bedingungen)</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Check-Constraints</p>
+
+<pre><code>spalte datentyp CHECK -- Prüfausdruck
+spalte datentyp CHECK (x &gt; 10),
+spalte datentyp CHECK (x &lt; y),
+</code></pre>
+
+<p>NOT NULL Constraints</p>
+
+<pre><code>spalte datentyp NOT NULL, -- Keine NULL-Werte
+</code></pre>
+
+<p>Kombiniert</p>
+
+<pre><code>spalte datentyp NOT NULL CHECK (x &gt; 10);
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-14" style="background:;">
+  <hgroup>
+    <h2>Primärschlüssel</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code>CREATE TABLE name (
+spalte1 datentyp PRIMARY KEY,
+...);
+
+CREATE TABLE name (
+spalte1 datentyp,
+spalte2 datentyp,
+...,
+PRIMARY KEY (spalte1)
+);
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-15" style="background:;">
+  <hgroup>
+    <h2>Fremdschlüssel</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code>CREATE TABLE name (
+spalte1 datentyp,
+spalte2 datentyp REFERENCES fs-tabelle (fs-spalte),
+...
+);
+
+CREATE TABLE name (
+spalte1 datentyp,
+spalte2 datentyp,
+...,
+FOREIGN KEY (spalte2) REFERENCES fs-tabelle (fs-spalte)
+);
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-16" style="background:;">
+  <hgroup>
+    <h2>Indizes</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Mehrdeutiger Index:</p>
+
+<pre><code>CREATE INDEX indexname ON tabelle (spalte);
+</code></pre>
+
+<p>Eindeutiger Index:</p>
+
+<pre><code>CREATE UNIQUE INDEX indexname ON tabelle (spalte);
+</code></pre>
+
+<p>Index löschen</p>
+
+<pre><code>DROP INDEX indexname;
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-17" style="background:;">
+  <hgroup>
+    <h2>ALTER TABLE I</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Spalte hinzufügen:</p>
+
+<pre><code>ALTER TABLE name ADD COLUMN spalte;
+</code></pre>
+
+<p>Spalte umbenennen:</p>
+
+<pre><code>ALTER TABLE name RENAME COLUMN spalte;
+</code></pre>
+
+<p>Spalte löschen</p>
+
+<pre><code>ALTER TABLE name DROP COLUMN spalte;
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-18" style="background:;">
+  <hgroup>
+    <h2>ALTER TABLE II</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Primärschlüssel hinzufügen</p>
+
+<pre><code>ALTER TABLE name ADD PRIMARY KEY (spalte);
+</code></pre>
+
+<p>Fremdschlüssel hinzufügen</p>
+
+<pre><code>ALTER TABLE name ADD CONSTRAINT constraint_name
+FOREIGN KEY (spalte) REFERENCES fs-tabelle (fs-spalte);
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-19" style="background:;">
+  <hgroup>
+    <h2>Dateneingabe</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Einen Datensatz:</p>
+
+<pre><code>INSERT INTO name (spalte1, spalte2) VALUES (&#39;wert1&#39;, wert2);
+</code></pre>
+
+<p>Mehrere Datensätze</p>
+
+<pre><code>INSERT INTO name (spalte1, spalte2) VALUES
+(&#39;wert1&#39;, wert2),
+(&#39;wert3&#39;, wert4); 
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-20" style="background:;">
+  <hgroup>
+    <h2>SQL: Abfragen</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Aufbau eines SELECT-Statements</p>
+
+<pre><code>SELECT      -- Spaltenliste
+
+FROM        -- Tabellenname
+
+[WHERE]     -- Auswahl
+
+[GROUP BY]  -- Gruppierung
+[HAVING]    -- Auswahl in Gruppierung
+
+[ORDER BY]  -- Sortierung;
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-21" style="background:;">
+  <hgroup>
+    <h2>Beispieldaten</h2>
+  </hgroup>
+  <article data-timings="">
+    
+<div style='float:left;width:48%;' class='centered'>
+  <pre><code>SELECT * FROM tbl_1;
+
+id_1 | feld_a1 | feld_b1 
+-----+---------+---------
+   1 | a       |       5
+   2 | b       |       4
+   3 | c       |       3
+   4 | b       |       2
+   5 | a       |       1
+</code></pre>
+
+</div>
+<div style='float:right;width:48%;' class='centered'>
+  <pre><code>SELECT * FROM tbl_2;
+
+id_2 | feld_a2 | feld_b2
+-----+---------+---------
+   1 | a       |       1
+   2 | b       |       2
+   3 | c       |       3
+   4 | d       |       2
+   5 | e       |       1
+</code></pre>
+
+</div>
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-22" style="background:;">
+  <hgroup>
+    <h2>Einfache SELECT-Abfragen</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code>SELECT feld_a1 FROM tbl_1;
+ feld_a1 
+---------
+  a
+  b
+  c
+  b
+  a
+</code></pre>
+
+<p>Reduktion auf eindeutige Werte mit DISTINCT</p>
+
+<pre><code>SELECT DISTINCT feld_a1 FROM tbl_1;
+ feld_a1 
+---------
+  c
+  b
+  a
+</code></pre>
+
+<p>Wichtig: DISTINCT ist keine Aggregation. Die ganze Tabelle wird ausgelesen, es findet keine Gruppierung statt.</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-23" style="background:;">
+  <hgroup>
+    <h2>Einfache SELECT-Abfragen mit SORT BY</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code>SELECT feld_b1, feld_a1 FROM tbl_1 ORDER BY feld_b1 DESC;
+
+feld_b1 | feld_a1 
+--------+---------
+      5 | a
+      4 | b
+      3 | c
+      2 | b
+      1 | a
+
+SELECT feld_b1, feld_a1 FROM tbl_1 ORDER BY feld_a1, feld_b1;
+
+feld_b1 | feld_a1 
+--------+---------
+      1 | a
+      5 | a
+      2 | b
+      4 | b
+      3 | c
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-24" style="background:;">
+  <hgroup>
+    <h2>SELECT-Abfragen mit WHERE-Klausel</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code>SELECT feld_a2, feld_b2 FROM tbl_2 WHERE feld_b2&gt;2;
+
+feld_a2 | feld_b2
+--------+---------
+c       |       3
+
+SELECT feld_a2, feld_b2 FROM tbl_2 WHERE feld_a2=&#39;a&#39;;
+
+feld_a2 | feld_b2
+--------+---------
+a       |       1
+
+SELECT feld_a2, feld_b2 FROM tbl_2 WHERE feld_a2=&#39;c&#39; OR feld_b2=1;
+
+feld_a2 | feld_b2 
+--------+---------
+a       |       1
+c       |       3
+e       |       1
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-25" style="background:;">
+  <hgroup>
+    <h2>SELECT mit LIMIT und OFFSET</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code>SELECT * FROM tbl_1 LIMIT 2;
+
+ id_1 | feld_a1 | feld_b1 
+------+---------+---------
+    1 | a       |       5
+    2 | b       |       4
+
+SELECT * FROM tbl_1 LIMIT 2 OFFSET 3;
+
+ id_1 | feld_a1 | feld_b1 
+------+---------+---------
+    4 | b       |       2
+    5 | a       |       1
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-26" style="background:;">
+  <hgroup>
+    <h2>SELECT mit ALIASES</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code>SELECT id_1 AS &quot;Schlüssel&quot;, feld_a1 AS &quot;X&quot;, feld_b1 AS &quot;Y&quot;
+FROM tbl_1;
+
+ Schlüssel | X | Y 
+ ----------+---+---
+         1 | a | 5
+         2 | b | 4
+         3 | c | 3
+         4 | b | 2
+         5 | a | 1
+
+SELECT apfel.feld_a1 AS &quot;Sorte&quot;, apfel.feld_b1 AS &quot;Anzahl&quot;
+FROM tbl_1 AS &quot;apfel&quot;;
+
+ Sorte | Anzahl 
+-------+--------
+ a     |      5
+ b     |      4
+ c     |      3
+ b     |      2
+ a     |      1
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-27" style="background:;">
+  <hgroup>
+    <h2>Aggregats-Funktionen</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code>SELECT AVG(feld_b2) AS &quot;Durchschnitt&quot; FROM tbl_2;
+  Durchschnitt    
+--------------------
+ 1.8000000000000000   -- Rückgabewert vom Typ numeric
+
+SELECT MIN(feld_b2) AS &quot;Minimum&quot; FROM tbl_2;
+  Minimum 
+---------
+     1                -- Rückgabewert entspricht Spaltentyp
+
+SELECT MAX(feld_b2) AS &quot;Maximum&quot; FROM tbl_2;
+  Maximum 
+---------
+     3                -- Rückgabewert entspricht Spaltentyp
+</code></pre>
+
+<p>Ausführliche Dokumentation und weitere Funktionen:</p>
+
+<p><a href="http://www.postgresql.org/docs/9.3/static/functions-aggregate.html">http://www.postgresql.org/docs/9.3/static/functions-aggregate.html</a></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-28" style="background:;">
+  <hgroup>
+    <h2>Aggregats-Funktionen mit GROUP-Klausel</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code>SELECT COUNT(id_2) AS &quot;Anzahl&quot; FROM tbl_2;
+ Anzahl 
+--------
+      5             -- Rückgabewert vom Typ bigint
+
+SELECT COUNT(id_1) AS &quot;Anzahl&quot;, feld_a1 FROM tbl_1 GROUP BY feld_a1;
+ Anzahl | feld_a1 
+--------+---------
+      1 | c
+      2 | b
+      2 | a
+
+SELECT SUM(id_1) AS &quot;Anzahl&quot;, feld_a1 FROM tbl_1 GROUP BY feld_a1;
+ Anzahl | feld_a1 
+--------+---------
+      3 | c
+      6 | b
+      6 | a
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-29" style="background:;">
+  <hgroup>
+    <h2>GROUP-BY und HAVING</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Filtern von Aggregaten (nicht mehr WHERE-Klausel!)</p>
+
+<pre><code>SELECT SUM(id_1) AS &quot;Anzahl&quot;, feld_a1 FROM tbl_1
+GROUP BY feld_a1
+HAVING feld_a1=&#39;a&#39;;
+
+ Anzahl | feld_a1 
+--------+---------
+      6 | a
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-30" style="background:;">
+  <hgroup>
+    <h2>Tabellenverbünde</h2>
+  </hgroup>
+  <article data-timings="">
+    <p><center><img src="http://www.codeproject.com/KB/database/Visual_SQL_Joins/Visual_SQL_JOINS_orig.jpg" alt="C.L. Moffat licensed under The Code Project Open License (CPOL)" width=600px) /></p>
+
+<p><a href="http://www.codeproject.com/Articles/33052/Visual-Representation-of-SQL-Joins">http://www.codeproject.com/Articles/33052/Visual-Representation-of-SQL-Joins</a></p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-31" style="background:;">
+  <hgroup>
+    <h2>Tabellenverbünde</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Kartesisches Produkt:</p>
+
+<p>Menge aller geordneten Paare von Elementen zweier Mengen</p>
+
+<pre><code>SELECT tbl_1.feld_a1, tbl_2.feld_a2 FROM tbl_1, tbl_2;
+
+ feld_a1 | feld_a2 
+---------+---------
+ a       | a
+ a       | b
+ a       | c
+ a       | d
+ a       | e
+ b       | a
+... etc.
+</code></pre>
+
+<p>Das Statement gibt 25 Datensätze zurück - zuviel für die Folie...</p>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-32" style="background:;">
+  <hgroup>
+    <h2>Es gilt</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code>SELECT ... FROM tbl_1, tbl_2;
+</code></pre>
+
+<p>entspricht:</p>
+
+<pre><code>SELECT ... FROM tbl_1 CROSS JOIN tbl_2;
+</code></pre>
+
+<p>entspricht:</p>
+
+<pre><code>SELECT ... FROM tbl_1 INNER JOIN tbl_2 ON (Ausdruck=TRUE);.
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-33" style="background:;">
+  <hgroup>
+    <h2>INNER JOIN</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code>SELECT tbl_1.id_1, tbl_2.id_2, tbl_1.feld_a1, tbl_2.feld_a2
+FROM tbl_1 INNER JOIN tbl_2
+ON (tbl_1.feld_a1 = tbl_2.feld_a2);
+
+ id_1 | id_2 | feld_a1 | feld_a2 
+------+------+---------+---------
+    1 |    1 | a       | a
+    5 |    1 | a       | a
+    2 |    2 | b       | b
+    4 |    2 | b       | b
+    3 |    3 | c       | c
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-34" style="background:;">
+  <hgroup>
+    <h2>RIGHT OUTER JOIN inklusiv</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code>SELECT tbl_1.id_1, tbl_2.id_2, tbl_1.feld_a1, tbl_2.feld_a
+FROM tbl_1 RIGHT OUTER JOIN tbl_2
+ON (tbl_1.feld_a1 = tbl_2.feld_a2);
+
+ id_1 | id_2 | feld_a1 | feld_a2 
+------+------+---------+---------
+    1 |    1 | a       | a
+    5 |    1 | a       | a
+    2 |    2 | b       | b
+    4 |    2 | b       | b
+    3 |    3 | c       | c
+      |    4 |         | d
+      |    5 |         | e
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-35" style="background:;">
+  <hgroup>
+    <h2>RIGHT OUTER JOIN exklusiv</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code>SELECT tbl_1.id_1, tbl_2.id_2, tbl_1.feld_a1, tbl_2.feld_a2
+FROM tbl_1 RIGHT OUTER JOIN tbl_2
+ON (tbl_1.feld_a1 = tbl_2.feld_a2)
+WHERE tbl_1.id_1 IS NULL;
+
+id_1 | id_2 | feld_a1 | feld_a2 
+------+------+---------+---------
+     |    4 |         | d
+     |    5 |         | e
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-36" style="background:;">
+  <hgroup>
+    <h2>Sichten</h2>
+  </hgroup>
+  <article data-timings="">
+    <pre><code>CREATE VIEW
+
+DROP VIEW
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-37" style="background:;">
+  <hgroup>
+    <h2>Benutzer anlegen und löschen</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Nutzer mit Passwort anlegen</p>
+
+<pre><code>CREATE USER nutzer PASSWORD &#39;passwort&#39;;
+</code></pre>
+
+<p>Nutzer löschen</p>
+
+<pre><code>DROP USER nutzer;
+</code></pre>
+
+<p>Mit Bestätigung</p>
+
+<pre><code>DROP USER nutzer -i;
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-38" style="background:;">
+  <hgroup>
+    <h2>Rechte ändern</h2>
+  </hgroup>
+  <article data-timings="">
+    <p>Passwort für user &#39;nutzer&#39; ändern:</p>
+
+<pre><code>ALTER USER nutzer WITH PASSWORD &#39;passwort&#39;;
+</code></pre>
+
+<p>Enddatum für user &#39;nutzer&#39; setzen</p>
+
+<pre><code>ALTER USER nutzer VALID UNTIL &#39;DEC 31 2014&#39;;
+</code></pre>
+
+<p>User &#39;nutzer&#39; erlauben, weitere User und Datenbanken anlegen </p>
+
+<pre><code>ALTER USER nutzer CREATEUSER CREATEDB;
+</code></pre>
+
+<p>User &#39;nutzer&#39; verbieten, weitere User und Datenbanken anlegen</p>
+
+<pre><code>ALTER USER nutzer NOCREATEUSER NOCREATEDB;
+</code></pre>
+
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-39" style="background:;">
+  <hgroup>
+    <h2>Rollen anlegen und löschen</h2>
+  </hgroup>
+  <article data-timings="">
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+<slide class="" id="slide-40" style="background:;">
+  <hgroup>
+    <h2>Rollen ändern</h2>
+  </hgroup>
+  <article data-timings="">
+    
+  </article>
+  <!-- Presenter Notes -->
+</slide>
+
+    <slide class="backdrop"></slide>
+  </slides>
+  <div class="pagination pagination-small" id='io2012-ptoc' style="display:none;">
+    <ul>
+      <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=1 title='Handbücher'>
+         1
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=2 title='www-Ressourcen'>
+         2
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=3 title='createdb: Datenbank erstellen'>
+         3
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=4 title='dropdb: Datenbank löschen'>
+         4
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=5 title='psql: Hilfe'>
+         5
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=6 title='psql: PostgreSQL-Version erfragen'>
+         6
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=7 title='psql: Verbindung zu Datenbank herstellen'>
+         7
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=8 title='psql: Datenbanken anlegen (SQL)'>
+         8
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=9 title='psql: Daten einspielen'>
+         9
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=10 title='psql: Funktionen'>
+         10
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=11 title='Datendefinition'>
+         11
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=12 title='PostgreSQL Datentypen (Auswahl)'>
+         12
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=13 title='Constraints (Bedingungen)'>
+         13
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=14 title='Primärschlüssel'>
+         14
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=15 title='Fremdschlüssel'>
+         15
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=16 title='Indizes'>
+         16
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=17 title='ALTER TABLE I'>
+         17
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=18 title='ALTER TABLE II'>
+         18
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=19 title='Dateneingabe'>
+         19
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=20 title='SQL: Abfragen'>
+         20
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=21 title='Beispieldaten'>
+         21
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=22 title='Einfache SELECT-Abfragen'>
+         22
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=23 title='Einfache SELECT-Abfragen mit SORT BY'>
+         23
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=24 title='SELECT-Abfragen mit WHERE-Klausel'>
+         24
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=25 title='SELECT mit LIMIT und OFFSET'>
+         25
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=26 title='SELECT mit ALIASES'>
+         26
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=27 title='Aggregats-Funktionen'>
+         27
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=28 title='Aggregats-Funktionen mit GROUP-Klausel'>
+         28
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=29 title='GROUP-BY und HAVING'>
+         29
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=30 title='Tabellenverbünde'>
+         30
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=31 title='Tabellenverbünde'>
+         31
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=32 title='Es gilt'>
+         32
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=33 title='INNER JOIN'>
+         33
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=34 title='RIGHT OUTER JOIN inklusiv'>
+         34
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=35 title='RIGHT OUTER JOIN exklusiv'>
+         35
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=36 title='Sichten'>
+         36
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=37 title='Benutzer anlegen und löschen'>
+         37
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=38 title='Rechte ändern'>
+         38
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=39 title='Rollen anlegen und löschen'>
+         39
+      </a>
+    </li>
+    <li>
+      <a href="#" target="_self" rel='tooltip' 
+        data-slide=40 title='Rollen ändern'>
+         40
+      </a>
+    </li>
+  </ul>
+  </div>  <!--[if IE]>
+    <script 
+      src="http://ajax.googleapis.com/ajax/libs/chrome-frame/1/CFInstall.min.js">  
+    </script>
+    <script>CFInstall.check({mode: 'overlay'});</script>
+  <![endif]-->
+</body>
+  <!-- Load Javascripts for Widgets -->
+  
+  <!-- LOAD HIGHLIGHTER JS FILES -->
+  <script src="libraries/highlighters/highlight.js/highlight.pack.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script>
+  <!-- DONE LOADING HIGHLIGHTER JS FILES -->
+   
+  </html>
