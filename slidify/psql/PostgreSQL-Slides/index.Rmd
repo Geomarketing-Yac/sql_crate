@@ -12,6 +12,18 @@ license: by-sa
 
 ---
 
+## Repostiorien
+
+Markdown:
+
+https://github.com/kacebe/sql_crate/blob/master/slidify/psql/PostgreSQL-Slides/index.md
+
+HTML5:
+
+http://kacebe.github.io/sql_crate/slidify/psql/PostgreSQL-Slides/
+
+---
+
 ## Handbücher
 
 * Eisentraut, Peter, und Bernd Helmle. PostgreSQL-Administration. 2. Auflage. O’Reilly, 2010.
@@ -311,6 +323,8 @@ Aufbau eines SELECT-Statements
 --- &twocol
 
 ## Beispieldaten
+
+
 
 *** =left
 

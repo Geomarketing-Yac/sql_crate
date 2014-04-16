@@ -12,6 +12,18 @@ license: by-sa
 
 ---
 
+## Repostiorien
+
+Markdown:
+
+https://github.com/kacebe/sql_crate/blob/master/slidify/psql/PostgreSQL-Slides/index.md
+
+HTML5:
+
+http://kacebe.github.io/sql_crate/slidify/psql/PostgreSQL-Slides/
+
+---
+
 ## Handbücher
 
 * Eisentraut, Peter, und Bernd Helmle. PostgreSQL-Administration. 2. Auflage. OReilly, 2010.
@@ -31,6 +43,8 @@ http://www.postgresql.org
 http://www.postgresonline.com/
 
 http://www.teialehrbuch.de/Kostenlose-Kurse/Datenbankentwicklung-mit-PostgreSQL-9/index.html
+
+http://workshop-postgresql.de/
 
 ---
 
@@ -309,6 +323,8 @@ Aufbau eines SELECT-Statements
 --- &twocol
 
 ## Beispieldaten
+
+
 
 *** =left
 
@@ -602,6 +618,10 @@ entspricht:
          |    4 |         | d
          |    5 |         | e
 
+Alles weitere zu JOINS in PostgreSQL:
+
+http://www.postgresql.org/docs/9.3/static/queries-table-expressions.html
+
 ---
 
 ## Sichten
@@ -649,6 +669,16 @@ User 'nutzer' verbieten, weitere User und Datenbanken anlegen
 ---
 
 ## Rollen anlegen und löschen
+
+Rolle mit Namen und Passwort anlegen:
+
+    CREATE ROLE rolle LOGIN PASSWORD 'passwort';
+
+Rolle anlegen, die Datenbanken und Rollen anlegen kann:
+
+    CREATE ROLE rolle WITH CREATEDB CREATEROLE;
+
+
 
 ---
 
